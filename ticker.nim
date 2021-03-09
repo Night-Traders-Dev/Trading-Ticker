@@ -1,11 +1,14 @@
-import httpclient
+import httpclient, strutils
+
+
+
 var
+  cryptoNames: seq[string]
   client = newHttpClient()
-  btcPrice = client.getContent("https://api.cryptonator.com/api/ticker/btc-usd")
-  ethPrice = client.getContent("https://api.cryptonator.com/api/ticker/eth-usd")
-  adaPrice = client.getContent("https://api.cryptonator.com/api/ticker/ada-usd")
-  xrpPrice = client.getContent("https://api.cryptonator.com/api/ticker/xrp-usd")
-echo btcPrice
-echo ethPrice
-echo adaPrice
-echo xrpPrice
+  tickerStr = "https://api.cryptonator.com/api/ticker/"
+
+cryptoNames = @["btc-usd", "eth-usd", "ada-usd", "xrp-usd", "doge-usd", "bnb-usd", "algo-usd"]
+
+for crypto in cryptoNames:
+  let price = tickerStr & crypto
+  echo client.getContent(price)
